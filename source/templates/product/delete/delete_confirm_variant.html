@@ -1,0 +1,26 @@
+{% extends "product/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="card card-danger"  >
+    <div class="card-header">
+      <h3 class="card-title" style="float:right; padding-right:15px;">تایید حذف</h3>
+    </div>
+    <form method="post" action=''>
+      {% csrf_token %}
+      {{form}}
+      <div class="card-body">
+          <div class="row">
+              
+              <p>آیا از حذف ویژگی اطمنیان دارید؟</p>
+              <pre></pre>
+              <button class="btn btn-success" type="submit"> تایید </button>
+              <button class="btn btn-danger"><a href="{% url 'product:variant_list' %}"> لغو </a></button>
+        </div>
+    </form>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+{% endblock%}

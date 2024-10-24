@@ -1,0 +1,87 @@
+{% load static %}
+
+<!-- Main Sidebar Container -->
+ <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      
+      <span class="brand-text font-weight-light">پنل مدیریت</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'images/profile.png'%}" class="img-circle elevation-2'%}" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{user.username}}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          
+          <li class="nav-item has-treeview menu-open">
+            
+            
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'order:order_filter' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>لیست سفارشات با گزارش</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'order:order_detail' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>لیست سفارشات</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'cart:cart_detail' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>لیست سبد خرید</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'product:variant_list' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>لیست محصولات با ویژگی</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'product:supply_list' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>لیست محصولات</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'product:category_list' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>لیست دسته</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'product:size_list' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p> لیست اندازه ها</p>
+                </a>
+              </li><li class="nav-item">
+                <a href="{% url 'product:type_list' %}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>لیست مدل ها</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

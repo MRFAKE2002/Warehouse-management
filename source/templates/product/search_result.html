@@ -1,0 +1,33 @@
+{% extends "product/base.html" %}
+{% load static %}
+{% block content %}
+
+<h2 style="padding-right:25px; padding-bottom: 25px;">لیست محصولات</h2>
+
+<!-- Big containers -->
+<div class="container-fluid">
+  <div class="row">
+    {% for variant in variant%}
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          <p>اسم :{{variant.supply.title}}</p>
+          <p>اندازه :{{variant.size}}</p>
+          <p>مدل :{{variant.type}}</p>
+          <p>قیمت :{{variant.price}}</p>
+          <h3>تعداد :{{variant.inventory}}</h3>
+        </div>
+        {% comment %} <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div> {% endcomment %}
+        <a href="{% url 'product:variant_detail' variant.id %}" class="small-box-footer">نمایش بیشتر <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+
+
+{% endblock %}

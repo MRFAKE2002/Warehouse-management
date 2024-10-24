@@ -1,0 +1,76 @@
+{% extends "product/base.html" %}
+{% load static %}
+{% block content %}
+ 
+<p class-"btn btn-primary" style="float:left; padding:20px;">
+  <a href="{% url 'product:supply_create' %}" > افزودن محصول جدید</a>
+  </p>
+<h2 style="padding-right:25px; padding-bottom: 25px;">لیست محصولات</h2>
+  <div class="row" style="padding-right:25px; padding-left:25px;">
+    {% for object in object_list %}
+      <div class="col-md-4">
+        <!-- Box Comment -->
+        <div class="card card-widget">
+          <div class="card-header">
+            <div class="user-block">
+              
+              <span class="username"><a href="{{ object.get_absolute_url}}">{{object.title}}</a></span>
+              <span class="description">{{object.category_to_str}}</span>
+            </div>
+            <!-- /.user-block -->
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool"><i class="fas fa-minus"></i>
+                <a  class="fas fa-times" href="{% url 'product:supply_delete' object.id %}" style="margin-right:25px; color:red;">
+                </a>
+              </button>
+              <button type="button" class="btn btn-tool">
+                <a  class="fas fa-edit" href="{% url 'product:supply_update' object.id %}" style="color:orange;">
+                </a>
+              </button>
+             
+            </div>
+            <!-- /.card-tools -->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body" style="display: block;">
+            <img class="img-fluid pad" src="{{object.image.url}}" alt="Photo" style="padding-bottom: 25px;">
+
+            <p>{{object.description}}</p>
+
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer card-comments" style="display: block;">
+            <div class="info-box">
+              <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">مدل های موجود </span>
+                <span class="info-box-number">{{object.type_to_str}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <div class="info-box">
+              <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">سایز های موجود</span>
+                <span class="info-box-number">{{object.size_to_str}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            
+          </div>
+          <!-- /.card-footer -->
+          <div class="card-footer" style="display: block;">
+          
+              <div class="img-push">
+                
+              </div>
+            </form>
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

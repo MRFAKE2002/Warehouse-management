@@ -1,0 +1,42 @@
+{% extends "product/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %}
+
+<div class="col-md-12">
+    <!-- general form elements disabled -->
+    <div class="card card-success">
+      <div class="card-header">
+        <h3 class="card-title" style="float: right; font-size: 25px;">ویرایش ویژگی‌های محصول</h3>
+      </div>
+      <div class="card-body">
+        <form enctype="multipart/form-data" method="post" action="{% url 'product:variant_update' id %}">
+          {% csrf_token %}
+          <div class="form-row">
+      
+            <div class="form-group col-md-6 mb-0">
+              {{form.supply|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+              {{form.type|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+              {{form.size|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+              {{form.price|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6 mb-0">
+              {{form.inventory|as_crispy_field }}
+            </div>
+            
+          </div>
+        <button class="btn btn-success"  type="submit">ثبت</button>
+        </form>
+      </div>
+      <!-- /.card-body -->
+    </div>
+  
+  </div>
+</div>
+{% endblock %}

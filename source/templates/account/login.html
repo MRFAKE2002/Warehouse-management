@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به حساب کاربری</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/fontawesome-all.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/iofrm-style.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/iofrm-theme29.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'additional.css' %}">
+    <style>
+        h3{
+            padding-bottom:15px;
+
+        }
+
+        input{
+            padding-bottom: 15px !important;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-body without-side">
+        <div class="website-logo">
+            <a href="index.html">
+                <div class="logo">
+                    <img class="logo-size" src="" alt="">
+                </div>
+            </a>
+        </div>
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                    <img src="{% static 'account/images/graphic3.svg'%}" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3 style="float:right;">ورود به پنل مدیریت</h3>
+                        <p></p>
+                        <form method="post" action=''>
+                            {% csrf_token %}
+                            <input class="form-control" style=" padding-bottom: 150px;"type="text" name="login" placeholder="نام کاربری" required>
+                            <input class="form-control" type="password" name="password" placeholder="رمز عبور" required>
+                            <div class="form-button">
+                                <button id="submit" type="submit" class="ibtn" style="float:right;">ورود</button> 
+                            </div>
+                        </form>
+                        <div class="other-links">
+                        </div>
+                        <div class="page-links">
+                            <a href="{% url 'account_signup' %}">حساب ندارید؟ ثبت نام کنید</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{% static 'account/js/jquery.min.js'%}"></script>
+<script src="{% static 'account/js/popper.min.js'%}"></script>
+<script src="{% static 'account/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'account/js/main.js'%}"></script>
+</body>
+</html>

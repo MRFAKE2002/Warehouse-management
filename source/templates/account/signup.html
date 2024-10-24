@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iofrm</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/fontawesome-all.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/iofrm-style.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/iofrm-theme29.css'%}">
+    <style>
+        .input{
+            float: right!important;
+            direction: rtl!important;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-body without-side">
+        <div class="website-logo">
+            <a href="index.html">
+                <div class="logo">
+               
+                </div>
+            </a>
+        </div>
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                    <img src="{% static 'account/images/graphic3.svg'%}" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>ایجاد حساب جدید</h3>
+                        <p></p>
+                        <form method="post" action=''>
+                            {% csrf_token %}
+                            <input class="form-control input" type="text" name="username" placeholder="نام کاربری" required>
+                            <p style='color:white'>
+                                گذرواژه شما نمی‌تواند شبیه سایر اطلاعات شخصی شما باشد.
+                                رمز عبور شما می‌بایست حداقل از 8 حرف تشکیل شده باشد.
+                                گذرواژه شما نمی تواند یک گذرواژه معمول باشد.
+                                گذرواژه شما نمی تواند کلا عدد باشد
+                            </p>
+                            <input class="form-control input" type="password" name="password1" placeholder="رمز عبور" required>
+                            <input class="form-control input" type="password" name="password2" placeholder="تکرار رمز عبور" required>
+                            <div class="form-button">
+                                <button id="submit" type="submit" class="ibtn">قبت نام</button>
+                            </div>
+                        </form>
+                        <div class="other-links">                                         
+                        </div>
+                        <div class="page-links">
+                            <a href="{% url 'account_login' %}">حساب دارید؟ وارد شوید</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{% static 'account/js/jquery.min.js'%}"></script>
+<script src="{% static 'account/js/popper.min.js'%}"></script>
+<script src="{% static 'account/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'account/js/main.js'%}"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{% extends "product/base.html" %}
+{% load static%}
+{% load jalali_tags %}
+{% load humanize %}
+
+{% block content %}
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title"style="float:right">لیست سبد خرید</h3>
+      {% comment %} <h4 class="card-title"style="float:right">{{ cart_user }}</h3> {% endcomment %}
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+   
+      <div class="row">
+        <table class="table table-bordered">
+          <thead>                  
+            <tr>
+              <th>
+                حذف
+              </th>
+              <th style="width: 10px">ردیف</th>
+              <th>عنوان</th>
+              <th>رنگ</th>
+              <th>سایز</th>
+              <th>قیمت خرید</th>
+              <th>قیمت فروش</th>
+              <th>تعداد</th>
+              <th>قیمت کل</th>
+              <th>مجموع سود کل</th>
+              <th>تاریخ و ساعت</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for item in object_list %}
+                <tr>
+                  <td>            
+                    <a class="fas fa-trash-alt" href="{% url 'cart:remove' item.id %}"></a>
+                  </td>
+                  <td>{{item.id}}</td>
+                  <td>{{item.variant}}</td>
+                  <td>{{item.type}}</td>
+                  <td>{{item.size}}</td>
+                  <td>{{item.price_buy|intcomma:False}}</td>
+                  <td>{{item.price|intcomma:False}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.total_price|intcomma:False}}</td>
+                  <td>{{item.total_purchase_profit|intcomma:False}}</td>
+                  <td>{{cart_user.create_at|to_jalali:'%y/%m/%d _ %H:%M:%S' }}</td>
+                </tr>
+              {% endfor %}
+              
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+      <a href="{% url 'cart:clear' %}">خالی کردن سبدخرید</a>
+      <form method="post" action="{% url 'order:order_create' %}">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- text input -->
+            <div class="form-group">
+              <label for="name"> اسم مشتری</label>
+              <input type="text" id="name" name="customer_name"  class="form-control"> 
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="phone">شماره مشتری</label>
+              <input type="tel" id="phone" name="customer_phone"  class="form-control">       
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-block bg-gradient-success btn-sm">ثبت سفارش</button>
+      </form>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+      
+    </div>
+  </div>
+
+{% endblock %}

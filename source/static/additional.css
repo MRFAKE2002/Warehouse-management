@@ -1,0 +1,9 @@
+@import url(font.css);
+
+body {
+
+    direction : rtl;
+    text-align: right;
+    font-family: "Tanha";
+    font-size: 16px;
+} 

@@ -1,0 +1,50 @@
+{% extends "product/base.html" %}
+{% load static%}
+{% block content %}
+
+<p class-"btn btn-primary" style="float:left; padding:20px;">
+  <a href="{% url 'product:size_create' %}" > افزودن اندازه جدید</a>
+  </p>
+<h2 style="padding-right:25px; padding-bottom: 25px;">لیست اندازه ها</h2>
+<div class="row" style="padding-right:25px; padding-left:25px;">
+
+    {% for object in object_list%}
+    <div class="col-md-3">
+      <div class="card card-warning">
+        <div class="card-header">
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool">
+                  <a  class="fas fa-times" href="{% url 'product:size_delete' object.id %}" style="color:red;">
+                  </a>
+                </button>
+                <button type="button" class="btn btn-tool">
+                  <a  class="fas fa-edit" href="{% url 'product:size_update' object.id %}" style="color:dark-orange;">
+                  </a>
+                </button>
+                <h3 class="card-title">{{object.name}}</h3>
+          </div>
+          <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          {% if object.supply_size.all %}
+            {% for i in object.supply_size.all %}
+              <a href="{{ i.get_absolute_url}}">{{ i|linebreaks }}</a>
+            {% endfor %}
+          {% else %}
+            محصولی در این دسته وجود ندارد
+          {% endif %}
+        </div>
+       
+      </div>
+      
+    </div>
+    
+    {% endfor %}
+   
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "product/base.html" %}
+{% load static%}
+{% load jalali_tags %}
+{% load humanize %}
+{% block content %}
+
+
+{% for order in orders %}
+<div class="card">
+  <h3 class="card-title" style="float:right"> سفارش شماره{{ order.id}} </h3>
+  <div class="card-header">
+    
+    {% if order.customer_name and order.customer_phone_number %}
+      <h4 class="card-title" style="float:right">{{ order.customer_name }}</h4>    
+      <h4 class="card-title" style="float:right">{{ order.customer_phone_number }}</h4>
+    {% elif not order.customer_phone_number and order.customer_name %}
+      <h4 class="card-title" style="float:right">{{ order.customer_name }}</h4>    
+    {% elif not order.customer_name and order.customer_phone_number %}
+      <h4 class="card-title" style="float:right">{{ order.customer_phone_number }}</h4>
+    {% elif not order.customer_phone_number and not order.customer_name %}
+      مشتری گذری بوده
+    {% endif %}
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            حذف
+          </th>
+          <th style="width: 10px">ردیف</th>
+          <th>عنوان</th>
+          <th>مدل</th>
+          <th>سایز</th>
+          <th>قیمت خرید</th>
+          <th>قیمت فروش</th>
+          <th>تعداد</th>
+          <th>قیمت کل</th>
+          <th>مجموع سود کل</th>
+          <th>تاریخ و ساعت</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.order_items.all %}
+        <tr>
+          <td>            
+            <a class="fas fa-trash-alt" href="{% url 'order:remove' order.id item.id %}"></a>
+          </td>
+          <td>{% if item.id %}{{ item.id }}{% else %}هیچی{% endif %}</td>
+          <td>{% if item.variant.supply.title %}{{ item.variant.supply.title }}{% else %}هیچی{% endif %}</td>
+          <td>{% if item.variant.type.name %}{{ item.variant.type.name }}{% else %}هیچی{% endif %}</td>
+          <td>{% if item.variant.size.name %}{{ item.variant.size.name }}{% else %}هیچی{% endif %}</td>
+          <td>{{ item.price_buy|intcomma:False }} تومان</td>
+          <td>{{ item.price|intcomma:False }} تومان</td>
+          <td>{% if item.quantity %}{{ item.quantity }}{% else %}0{% endif %}</td>
+          <td>{{ item.total_price|intcomma:False }} تومان</td>
+          <td>{{ item.total_purchase_profit|intcomma:False }} تومان</td>
+          <td>{{ order.create_at|to_jalali:"%y/%m/%d _ %H:%M:%S" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'order:clear' order.id %}">پاک کردن سفارش</a>
+
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer clearfix">
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

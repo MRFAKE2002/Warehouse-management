@@ -1,0 +1,187 @@
+{% extends "product/base.html" %}
+{% load static %}
+{% load jalali_tags %}
+{% load humanize %}
+{% block content %}
+
+<style>
+  /* استایل کلی */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+  }
+
+  /* استایل ظرف کلی */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* استایل فرم */
+  .form-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .btn:hover {
+    background-color: #218838;
+  }
+
+  /* استایل جدول */
+  .orders-container {
+    overflow-x: auto;
+  }
+
+  .orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+
+  .orders-table th {
+    background-color: #f2f2f2;
+  }
+
+  .delete-icon {
+    color: #dc3545;
+    cursor: pointer;
+  }
+
+  .delete-icon:hover {
+    color: #c82333;
+  }
+  </style>
+
+<div class="container">
+  <div class="form-container">
+    <form method="post" action="{% url "order:order_filter" %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="start_date">زمان شروع</label>
+        {{ form.start_date }}
+      </div>
+      <div class="form-group">
+        <label for="end_date">زمان پایان</label>
+        {{ form.end_date }}
+      </div>
+      <button type="submit" class="btn btn-success">نمایش گزارش</button>
+    </form>
+  </div>
+
+{% for order in orders %}
+<div class="card">
+  <h3 class="card-title" style="float:right"> سفارش شماره {{ order.id }} </h3>
+  <div class="card-header">
+    {% if order.customer_name and order.customer_phone_number %}
+      <h4 class="card-title" style="float:right">{{ order.customer_name }}</h4>
+      <h4 class="card-title" style="float:right">{{ order.customer_phone_number }}</h4>
+    {% elif not order.customer_phone_number and order.customer_name %}
+      <h4 class="card-title" style="float:right">{{ order.customer_name }}</h4>
+    {% elif not order.customer_name and order.customer_phone_number %}
+      <h4 class="card-title" style="float:right">{{ order.customer_phone_number }}</h4>
+    {% elif not order.customer_phone_number and not order.customer_name %}
+      مشتری گذری بوده
+    {% endif %}
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>شماره سفارش</th>
+          <th>نام مشتری</th>
+          <th>شماره تلفن</th>
+          <th>عنوان محصول</th>
+          <th>مدل</th>
+          <th>سایز</th>
+          <th>قیمت خرید</th>
+          <th>قیمت فروش</th>
+          <th>تعداد</th>
+          <th>قیمت کل</th>
+          <th>سود کل</th>
+          <th>تاریخ و ساعت</th>
+          <th>حذف</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.order_items.all %}
+        <tr>
+          <td>{{ order.id }}</td>
+          <td>{% if order.customer_name %}{{ order.customer_name }}{% else %}ناموجود{% endif %}</td>
+          <td>{% if order.customer_phone_number %}{{ order.customer_phone_number }}{% else %}ناموجود{% endif %}</td>
+          <td>{% if item.variant.supply.title %}{{ item.variant.supply.title }}{% else %}ناموجود{% endif %}</td>
+          <td>{% if item.variant.type.name %}{{ item.variant.type.name }}{% else %}ناموجود{% endif %}</td>
+          <td>{% if item.variant.size.name %}{{ item.variant.size.name }}{% else %}ناموجود{% endif %}</td>
+          <td>{{ item.price_buy|intcomma:False }} تومان</td>
+          <td>{{ item.price|intcomma:False }} تومان</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.total_price|intcomma:False }} تومان</td>
+          <td>{{ item.total_purchase_profit|intcomma:False }} تومان</td>
+          <td>{{ order.create_at|to_jalali:"%y/%m/%d _ %H:%M:%S" }}</td>
+          <td><a class="delete-icon" href="{% url 'order:remove' order.id item.id %}">حذف</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'order:clear' order.id %}">پاک کردن سفارش</a>
+  </div>
+  <div class="card-footer clearfix">
+  </div>
+</div>
+{% endfor %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".datepicker").persianDatepicker({
+      format: 'YYYY-MM-DD',
+      autoClose: true
+    });
+  });
+</script>
+
+{% endblock %}
